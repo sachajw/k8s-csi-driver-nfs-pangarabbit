@@ -50,7 +50,7 @@ controller:
   name: csi-nfs-controller
   replicas: 2 # refer tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   strategyType: Recreate
-  runOnMaster: false
+  runOnMaster: true
   runOnControlPlane: true # refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   livenessProbe:
     healthPort: 29652
@@ -154,17 +154,19 @@ imagePullSecrets: []
 ## StorageClass resource
 storageClass:
   create: true
-  name: nfs-csi
+  name: nfs-csi-default
   parameters:
-    server: nfs.pangarabbit.com
-    share: /pi8s/
+    server: 192.168.0.152
+    share: /volume4/pi8s
     subDir:
     mountPermissions: "0"
     # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
     csi.storage.k8s.io/provisioner-secret-name: "mount-options"
     csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
+  allowVolumeExpansion: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   mountOptions:
+    - hard
     - nfsvers=4.1
-    - rw,sync,no_root_squash,no_subtree_check
+    # - rw,sync,no_subtree_check

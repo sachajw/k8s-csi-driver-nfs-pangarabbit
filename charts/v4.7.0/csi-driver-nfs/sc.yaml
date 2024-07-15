@@ -1,0 +1,30 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    meta.helm.sh/release-name: csi-driver-nfs
+    meta.helm.sh/release-namespace: kube-system
+    storageclass.kubernetes.io/is-default-class: "true"
+  creationTimestamp: "2024-07-15T09:25:02Z"
+  labels:
+    app.kubernetes.io/instance: csi-driver-nfs
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: csi-driver-nfs
+    app.kubernetes.io/version: v4.7.0
+    helm.sh/chart: csi-driver-nfs-v4.7.0
+  name: nfs-csi-default
+  resourceVersion: "133396"
+  uid: d97609ea-b94f-40f9-9da0-1f8a7725b41d
+mountOptions:
+- hard
+- nfsvers=4.1
+parameters:
+  csi.storage.k8s.io/provisioner-secret-name: mount-options
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  mountPermissions: "0"
+  server: 192.168.0.152
+  share: /volume4/pi8s
+  subDir: ""
+provisioner: nfs.csi.k8s.io
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
