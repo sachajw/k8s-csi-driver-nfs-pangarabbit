@@ -59,7 +59,8 @@ controller:
   dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
   defaultOnDeletePolicy: delete # available values: delete, retain
   affinity: {}
-  nodeSelector: {}
+  nodeSelector:
+    microk8s-controlplane: microk8s-controlplane
   priorityClassName: system-cluster-critical
   tolerations:
     - key: "node-role.kubernetes.io/master"
