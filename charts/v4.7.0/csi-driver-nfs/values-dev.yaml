@@ -48,19 +48,31 @@ kubeletDir: /var/snap/microk8s/common/var/lib/kubelet # microk8s specific https:
 
 controller:
   name: csi-nfs-controller
-  replicas: 2 # refer tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
+  replicas: 3 # refer tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   strategyType: Recreate
-  # runOnMaster: true
-  # runOnControlPlane: true # refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
+  runOnMaster: true
+  runOnControlPlane: true # refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   livenessProbe:
     healthPort: 29652
   logLevel: 5
   workingMountDir: /tmp
   dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
   defaultOnDeletePolicy: delete # available values: delete, retain
-  affinity: {}
+  affinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - arm64
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
   nodeSelector:
-    node.kubernetes.io: microk8s-controlplane
+    kubernetes.io/arch: arm64
+    kubernetes.io/os: linux
   priorityClassName: system-cluster-critical
   tolerations:
     - key: "node-role.kubernetes.io/master"
