@@ -60,9 +60,13 @@ controller:
   defaultOnDeletePolicy: delete # available values: delete, retain
   affinity: {}
   nodeSelector:
-    microk8s-controlplane: microk8s-controlplane
+    {}
+    # node.kubernetes.io: microk8s-controlplane
   priorityClassName: system-cluster-critical
   tolerations:
+    # - key: "node.kubernetes.io/microk8s-controlplane"
+    #   operator: "Exists"
+    #   effect: "NoSchedule"
     - key: "node-role.kubernetes.io/master"
       operator: "Exists"
       effect: "NoSchedule"
@@ -169,5 +173,5 @@ storageClass:
   volumeBindingMode: Immediate
   mountOptions:
     - hard
-    - nfsvers=4.1
+    - nfsvers=4
     # - rw,sync,no_subtree_check
