@@ -44,7 +44,7 @@ feature:
   enableInlineVolume: false
   propagateHostMountOptions: false
 
-kubeletDir: /var/snap/microk8s/common/var/lib/kubelet # microk8s specific https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
+kubeletDir: /var/snap/microk8s/common/var/lib/kubelet
 
 controller:
   name: csi-nfs-controller
@@ -59,20 +59,22 @@ controller:
   dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
   defaultOnDeletePolicy: delete # available values: delete, retain
   affinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-                - arm64
-            - key: kubernetes.io/os
-              operator: In
-              values:
-                - linux
+    {}
+    # requiredDuringSchedulingIgnoredDuringExecution:
+    #   nodeSelectorTerms:
+    #     - matchExpressions:
+    #         - key: kubernetes.io/arch
+    #           operator: In
+    #           values:
+    #             - arm64
+    #         - key: kubernetes.io/os
+    #           operator: In
+    #           values:
+    #             - linux
   nodeSelector:
-    kubernetes.io/arch: arm64
-    kubernetes.io/os: linux
+    {}
+    # kubernetes.io/arch: arm64
+    # kubernetes.io/os: linux
   priorityClassName: system-cluster-critical
   tolerations:
     - key: "node-role.kubernetes.io/master"
@@ -170,8 +172,8 @@ storageClass:
   name: nfs-csi-default
   parameters:
     server: 192.168.0.152
-    share: /volume4/pi8s/
-    subDir: default
+    share: /volume4/pi8s
+    #subDir:
     mountPermissions: "0"
     # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
     csi.storage.k8s.io/provisioner-secret-name: "mount-options"
@@ -180,6 +182,5 @@ storageClass:
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   mountOptions:
-    # - hard
+    - hard
     - nfsvers=4
-    # - rw,sync,no_subtree_check
