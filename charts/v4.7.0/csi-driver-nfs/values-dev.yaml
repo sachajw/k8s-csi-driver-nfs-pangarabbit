@@ -170,6 +170,7 @@ imagePullSecrets: []
 storageClass:
   create: true
   name: nfs-csi-default
+  provisioner: nfs.csi.k8s.io
   parameters:
     server: 192.168.0.152
     share: /volume4/pi8s/
