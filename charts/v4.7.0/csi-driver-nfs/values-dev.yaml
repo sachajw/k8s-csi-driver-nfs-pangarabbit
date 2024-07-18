@@ -50,8 +50,8 @@ controller:
   name: csi-nfs-controller
   replicas: 3 # refer tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   strategyType: Recreate
-  runOnMaster: true
-  runOnControlPlane: true # refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
+  #runOnMaster: true
+  #runOnControlPlane: true # refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   livenessProbe:
     healthPort: 29652
   logLevel: 5
@@ -178,7 +178,7 @@ storageClass:
     # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
     csi.storage.k8s.io/provisioner-secret-name: "mount-options"
     csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
-  allowVolumeExpansion: true
+    allowVolumeExpansion: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   mountOptions:
