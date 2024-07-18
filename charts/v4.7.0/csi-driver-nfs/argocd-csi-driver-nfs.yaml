@@ -9,7 +9,7 @@ spec:
   project: pangarabbit
   source:
     repoURL: "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts"
-    targetRevision: 4.6.0
+    targetRevision: 4.7.0
     chart: csi-driver-nfs
     helm:
       valueFiles:

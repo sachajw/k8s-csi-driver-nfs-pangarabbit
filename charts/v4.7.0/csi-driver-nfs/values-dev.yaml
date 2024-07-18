@@ -50,8 +50,8 @@ controller:
   name: csi-nfs-controller
   replicas: 3 # refer tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   strategyType: Recreate
-  #runOnMaster: true # when enabled the csi-nfs-controller pods won't run
-  #runOnControlPlane: true # when enabled the csi-nfs-controller pods won't run | refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
+  runOnMaster: false # when enabled the csi-nfs-controller pods won't run
+  runOnControlPlane: false # when enabled the csi-nfs-controller pods won't run | refer to tips https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/charts
   livenessProbe:
     healthPort: 29652
   logLevel: 5
@@ -172,7 +172,7 @@ storageClass:
   name: nfs-csi-default
   parameters:
     server: 192.168.0.152
-    share: /volume4/pi8s
+    share: /volume4/pi8s/
     #subDir:
     mountPermissions: "0"
     # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
